@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <changeSet id="createTableKid" author="hgspeyan">
+        <createTable tableName="kid" >
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" />
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="createColumnsForKid" author="hgspeyan">
+        <addColumn tableName="kid">
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="surname" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="group" type="ENUM('JUNIOR','MIDDLE','SENIOR')">
+                <constraints nullable="false"/>
+            </column>
+            <column name="gender" type="ENUM('MALE','FEMALE')">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pic_url" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="parent_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="event_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="babySitter_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+        <createTable tableName="parent">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="surname" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="gender" type="ENUM('MALE','FEMALE')">
+                <constraints nullable="false"/>
+            </column>
+             <column name="phone_number" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+             <column name="kid_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+        <createTable tableName="activity">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="gaming" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="training_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="meal" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        <createTable tableName="user">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="surname" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role" type="ENUM('ADMIN','USER','BABYSITTER','PARENT')">
+                <constraints nullable="true"/>
+            </column>
+            <column name="activity_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="kid_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="parent_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="event_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="babySitter_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+
+        </createTable>
+        <createTable tableName="event">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="title" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="price" type="double">
+                <constraints nullable="true"/>
+            </column>
+            <column name="duration" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+            <column name="description" type="text">
+                <constraints nullable="true"/>
+            </column>
+            <column name="event_type" type="ENUM('FILM','THEATRE','SPORT','GAME')">
+                <constraints nullable="true"/>
+            </column>
+            <column name="place" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="date" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+            <column name="kid_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        <createTable tableName="babySitter">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="surname" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="gender" type="ENUM('MALE','FEMALE')">
+                <constraints nullable="true"/>
+            </column>
+            <column name="phone_number" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="kid_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="experience" type="ENUM('JUNIOR','MIDDLE','SENIOR')">
+                <constraints nullable="true"/>
+            </column>
+            <column name="training_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        <createTable tableName="training">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="description" type="text">
+                <constraints nullable="true"/>
+            </column>
+            <column name="date_time" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="createColumnKidId" author="hgspeyan">
+        <addColumn tableName="training">
+            <column name="kid_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="babysitter">
+            <column name="pic_url" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="crateTableKidEvent" author="hgspeyan">
+        <createTable tableName="kid_event">
+            <column name="kid_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="event_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        <createTable tableName="kid_parent">
+            <column name="kid_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="parent_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+         <createTable tableName="kid_babysitter">
+            <column name="kid_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="babysitter_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+    <changeSet id="createFkUserKid" author="hgspeyan">
+        <addForeignKeyConstraint baseTableName="user" baseColumnNames="kid_id" constraintName="user_kid_fk" referencedTableName="kid"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="user" baseColumnNames="activity_id" constraintName="user_activity_fk" referencedTableName="activity"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="user" baseColumnNames="parent_id" constraintName="user_parent_fk" referencedTableName="parent"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="user" baseColumnNames="event_id" constraintName="user_event_fk" referencedTableName="event"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="user" baseColumnNames="babysitter_id" constraintName="user_babysitter_fk" referencedTableName="babysitter"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="training" baseColumnNames="kid_id" constraintName="training_kid_fk" referencedTableName="kid"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+    <changeSet id="createManyToManyConnections" author="hgspeyan">
+        <addForeignKeyConstraint baseTableName="kid_babysitter" baseColumnNames="kid_id" constraintName="kid_kid_babysitter_fk" referencedTableName="kid"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="kid_babysitter" baseColumnNames="babysitter_id" constraintName="babysitter_babysitter_fk" referencedTableName="babysitter"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="kid_event" baseColumnNames="kid_id" constraintName="kid_kid_event_fk" referencedTableName="kid"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="kid_event" baseColumnNames="event_id" constraintName="event_event_fk" referencedTableName="event"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="kid_parent" baseColumnNames="kid_id" constraintName="kid_kid_parent_fk" referencedTableName="kid"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="kid_parent" baseColumnNames="parent_id" constraintName="parent_parent_fk" referencedTableName="parent"
+                                 referencedColumnNames="id"/>
+
+    </changeSet>
+    <changeSet id="createFkActivityTraining" author="hgspeyan">
+        <addForeignKeyConstraint baseTableName="activity" baseColumnNames="training_id" constraintName="activity_training_fk"
+                                 referencedTableName="training"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+    <changeSet id="deleteTableKidParent" author="hgspeyan">
+        <dropForeignKeyConstraint baseTableName="kid_parent" constraintName="kid_kid_parent_fk" />
+        <dropForeignKeyConstraint baseTableName="kid_parent" constraintName="parent_parent_fk" />
+        <dropTable tableName="kid_parent" />
+    </changeSet>
+    <changeSet id="createFkParentKid" author="hgspeyan">
+        <addForeignKeyConstraint baseTableName="parent" baseColumnNames="kid_id" constraintName="parent_kid_fk" referencedTableName="kid"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+    <changeSet id="createBabySitterTrainingFk" author="hgspeyan">
+        <addForeignKeyConstraint baseTableName="babysitter" baseColumnNames="training_id" constraintName="babysitter_training_fk"
+                                 referencedTableName="activity"
+                                 referencedColumnNames="training_id"/>
+    </changeSet>
+    <changeSet id="createSecurityForUser" author="hgspeyan">
+        <addColumn tableName="user">
+            <column name="is_enable" type="int" defaultValue="0">
+            <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="user">
+            <column name="verify_token" type="varchar(255)">
+            <constraints nullable="false"/>
+            </column>
+        </addColumn>
+
+    </changeSet>
+
+</databaseChangeLog>

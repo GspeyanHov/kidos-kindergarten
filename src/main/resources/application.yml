@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/kidos_kindergarten
+    username: root
+    password: root
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: gspeyanhov@gmail.com
+    password: dzekpfeqreysewgr
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+
+  liquibase:
+    change-log: classpath:db/changelog/2022/12/migration.xml
+
+jwt:
+  secret: papikitornik
+  expiration: 330000

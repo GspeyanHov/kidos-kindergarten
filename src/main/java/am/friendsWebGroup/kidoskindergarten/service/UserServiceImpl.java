@@ -1,15 +1,17 @@
 package am.friendsWebGroup.kidoskindergarten.service;
 
-import am.friendsWebGroup.kidoskindergarten.dto.AuthRequestDto;
-import am.friendsWebGroup.kidoskindergarten.dto.AuthResponseDto;
-import am.friendsWebGroup.kidoskindergarten.dto.CreateUserDto;
+import am.friendsWebGroup.kidoskindergarten.dto.authDto.AuthRequestDto;
+import am.friendsWebGroup.kidoskindergarten.dto.authDto.AuthResponseDto;
+import am.friendsWebGroup.kidoskindergarten.dto.userDto.CreateUserDto;
+import am.friendsWebGroup.kidoskindergarten.dto.userDto.ResponseUserDto;
 import am.friendsWebGroup.kidoskindergarten.entity.Role;
 import am.friendsWebGroup.kidoskindergarten.entity.User;
 import am.friendsWebGroup.kidoskindergarten.exception.AuthenticationException;
-import am.friendsWebGroup.kidoskindergarten.exception.EntityDuplicateException;
+import am.friendsWebGroup.kidoskindergarten.exception.UserNotFoundException;
 import am.friendsWebGroup.kidoskindergarten.mapper.UserMapper;
 import am.friendsWebGroup.kidoskindergarten.repository.UserRepository;
 import am.friendsWebGroup.kidoskindergarten.util.JwtTokenUtil;
+import am.friendsWebGroup.kidoskindergarten.validation.validator.UserValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,16 +32,14 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
 
+    private final UserValidator userValidator;
     private final MailService mailService;
     private final JwtTokenUtil jwtTokenUtil;
 
     @Override
-    public User saveUser(CreateUserDto dto) {
-        if (userRepository.findByEmail(dto.getEmail()).isPresent()) {
-            throw new EntityDuplicateException(DUPLICATE_EMAIL);
-        }
-
+    public ResponseUserDto saveUser(CreateUserDto dto) {
         User user = userMapper.mapToEntity(dto);
+        userValidator.validateUserRegistration(user);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole(Role.USER);
         user.setEnable(false);
@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
         log.info("New user registered {}", user.getEmail());
         mailService.sendEmail(user);
         log.info("Verification email was sent to user {}", user.getEmail());
-        return user;
+        return userMapper.mapToDto(user);
     }
 
     @Override
@@ -73,5 +73,16 @@ public class UserServiceImpl implements UserService {
         return AuthResponseDto.builder()
                 .token(jwtTokenUtil.generateToken(user.getEmail()))
                 .build();
+    }
+
+    @Override
+    public ResponseUserDto findUserById(int id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if(optionalUser.isEmpty()){
+            log.error("user with {} id not found", id);
+            throw new UserNotFoundException(NO_SUCH_USER);
+        }
+        log.info("user with {} id successfully found", id);
+        return userMapper.mapToDto(optionalUser.get());
     }
 }

@@ -1,12 +1,12 @@
 package am.friendsWebGroup.kidoskindergarten.entity;
 
-public enum Group {
+public enum KidGroup {
 
     JUNIOR(3,  4),
     MIDDLE(4,5),
     SENIOR(5,6);
 
-    Group(double minYear, double maxYear) {
+    KidGroup(double minYear, double maxYear) {
         this.MIN_YEAR = minYear;
         this.MAX_YEAR = maxYear;
     }

@@ -1,13 +1,16 @@
 package am.friendsWebGroup.kidoskindergarten.service;
 
-import am.friendsWebGroup.kidoskindergarten.dto.AuthRequestDto;
-import am.friendsWebGroup.kidoskindergarten.dto.AuthResponseDto;
-import am.friendsWebGroup.kidoskindergarten.dto.CreateUserDto;
-import am.friendsWebGroup.kidoskindergarten.entity.User;
+import am.friendsWebGroup.kidoskindergarten.dto.authDto.AuthRequestDto;
+import am.friendsWebGroup.kidoskindergarten.dto.authDto.AuthResponseDto;
+import am.friendsWebGroup.kidoskindergarten.dto.userDto.CreateUserDto;
+import am.friendsWebGroup.kidoskindergarten.dto.userDto.ResponseUserDto;
 
 public interface UserService {
 
-    User saveUser(CreateUserDto dto);
+    ResponseUserDto saveUser(CreateUserDto dto);
 
     AuthResponseDto login(AuthRequestDto authRequestDto);
+
+    ResponseUserDto findUserById(int id);
+
 }

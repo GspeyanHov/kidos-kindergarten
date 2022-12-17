@@ -2,15 +2,15 @@ package am.friendsWebGroup.kidoskindergarten.api;
 
 import am.friendsWebGroup.kidoskindergarten.dto.authDto.AuthRequestDto;
 import am.friendsWebGroup.kidoskindergarten.dto.authDto.AuthResponseDto;
+import am.friendsWebGroup.kidoskindergarten.dto.eventDto.CreateEventRequestDto;
+import am.friendsWebGroup.kidoskindergarten.dto.eventDto.EventResponseDto;
 import am.friendsWebGroup.kidoskindergarten.dto.userDto.CreateUserDto;
 import am.friendsWebGroup.kidoskindergarten.dto.userDto.ResponseUserDto;
 import org.springframework.http.ResponseEntity;
+
 @SuppressWarnings("unused")
-public interface UserApi {
+public interface EventApi {
 
-    ResponseEntity<ResponseUserDto> registerUser(CreateUserDto createUserDto);
+    ResponseEntity<EventResponseDto> createEvent(CreateEventRequestDto createEventRequestDto);
 
-    ResponseEntity<AuthResponseDto> login(AuthRequestDto authRequestDto);
-
-    ResponseEntity<ResponseUserDto> findUserById(int id);
 }

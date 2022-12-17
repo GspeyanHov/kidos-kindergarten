@@ -1,7 +1,7 @@
 package am.friendsWebGroup.kidoskindergarten;
 
-import am.friendsWebGroup.kidoskindergarten.dto.AuthRequestDto;
-import am.friendsWebGroup.kidoskindergarten.dto.AuthResponseDto;
+import am.friendsWebGroup.kidoskindergarten.dto.authDto.AuthRequestDto;
+import am.friendsWebGroup.kidoskindergarten.dto.authDto.AuthResponseDto;
 import am.friendsWebGroup.kidoskindergarten.entity.User;
 
 public class MockData {

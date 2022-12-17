@@ -1,4 +1,4 @@
-package am.friendsWebGroup.kidoskindergarten.dto;
+package am.friendsWebGroup.kidoskindergarten.dto.authDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthRequestDto {
+public class AuthResponseDto {
 
-    private String email;
-    private String password;
+    private String token;
 }

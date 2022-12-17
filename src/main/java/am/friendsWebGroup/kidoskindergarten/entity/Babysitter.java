@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "babySitter")
+@Table(name = "babysitter")
 
 public class Babysitter {
 
@@ -34,4 +34,6 @@ public class Babysitter {
     @ManyToOne
     private Training training;
     private String pic_url;
+    @OneToOne
+    private User user;
 }

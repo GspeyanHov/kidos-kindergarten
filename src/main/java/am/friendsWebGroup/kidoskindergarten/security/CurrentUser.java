@@ -2,6 +2,7 @@ package am.friendsWebGroup.kidoskindergarten.security;
 
 import am.friendsWebGroup.kidoskindergarten.entity.User;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 public class CurrentUser extends org.springframework.security.core.userdetails.User {
 
@@ -16,4 +17,6 @@ public class CurrentUser extends org.springframework.security.core.userdetails.U
     public User getUser() {
         return user;
     }
+
+
 }

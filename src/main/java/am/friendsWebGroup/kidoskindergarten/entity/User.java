@@ -12,7 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 
 public class User {
 
@@ -29,8 +29,6 @@ public class User {
     private Activity activity;
     @ManyToOne
     private Kid kid;
-    @ManyToOne
-    private Parent parent;
     @ManyToOne
     private Event event;
     @ManyToOne

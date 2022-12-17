@@ -35,7 +35,7 @@
             <column name="event_id" type="bigint">
                 <constraints nullable="true"/>
             </column>
-            <column name="babySitter_id" type="bigint">
+            <column name="babysitter_id" type="bigint">
                 <constraints nullable="true"/>
             </column>
         </addColumn>
@@ -80,7 +80,7 @@
                 <constraints nullable="true"/>
             </column>
         </createTable>
-        <createTable tableName="user">
+        <createTable tableName="users">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
@@ -111,7 +111,7 @@
             <column name="event_id" type="bigint">
                 <constraints nullable="true"/>
             </column>
-            <column name="babySitter_id" type="bigint">
+            <column name="babysitter_id" type="bigint">
                 <constraints nullable="true"/>
             </column>
 
@@ -145,7 +145,7 @@
                 <constraints nullable="true"/>
             </column>
         </createTable>
-        <createTable tableName="babySitter">
+        <createTable tableName="babysitter">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
@@ -231,16 +231,16 @@
         </createTable>
 
     </changeSet>
-    <changeSet id="createFkUserKid" author="hgspeyan">
-        <addForeignKeyConstraint baseTableName="user" baseColumnNames="kid_id" constraintName="user_kid_fk" referencedTableName="kid"
+    <changeSet id="createFkUsersKid" author="hgspeyan">
+        <addForeignKeyConstraint baseTableName="users" baseColumnNames="kid_id" constraintName="users_kid_fk" referencedTableName="kid"
                                  referencedColumnNames="id"/>
-        <addForeignKeyConstraint baseTableName="user" baseColumnNames="activity_id" constraintName="user_activity_fk" referencedTableName="activity"
+        <addForeignKeyConstraint baseTableName="users" baseColumnNames="activity_id" constraintName="users_activity_fk" referencedTableName="activity"
                                  referencedColumnNames="id"/>
-        <addForeignKeyConstraint baseTableName="user" baseColumnNames="parent_id" constraintName="user_parent_fk" referencedTableName="parent"
+        <addForeignKeyConstraint baseTableName="users" baseColumnNames="parent_id" constraintName="users_parent_fk" referencedTableName="parent"
                                  referencedColumnNames="id"/>
-        <addForeignKeyConstraint baseTableName="user" baseColumnNames="event_id" constraintName="user_event_fk" referencedTableName="event"
+        <addForeignKeyConstraint baseTableName="users" baseColumnNames="event_id" constraintName="users_event_fk" referencedTableName="event"
                                  referencedColumnNames="id"/>
-        <addForeignKeyConstraint baseTableName="user" baseColumnNames="babysitter_id" constraintName="user_babysitter_fk" referencedTableName="babysitter"
+        <addForeignKeyConstraint baseTableName="users" baseColumnNames="babysitter_id" constraintName="users_babysitter_fk" referencedTableName="babysitter"
                                  referencedColumnNames="id"/>
         <addForeignKeyConstraint baseTableName="training" baseColumnNames="kid_id" constraintName="training_kid_fk" referencedTableName="kid"
                                  referencedColumnNames="id"/>
@@ -274,23 +274,82 @@
         <addForeignKeyConstraint baseTableName="parent" baseColumnNames="kid_id" constraintName="parent_kid_fk" referencedTableName="kid"
                                  referencedColumnNames="id"/>
     </changeSet>
-    <changeSet id="createBabySitterTrainingFk" author="hgspeyan">
+    <changeSet id="createBabysitterTrainingFk" author="hgspeyan">
         <addForeignKeyConstraint baseTableName="babysitter" baseColumnNames="training_id" constraintName="babysitter_training_fk"
                                  referencedTableName="activity"
                                  referencedColumnNames="training_id"/>
     </changeSet>
     <changeSet id="createSecurityForUser" author="hgspeyan">
-        <addColumn tableName="user">
+        <addColumn tableName="users">
             <column name="is_enable" type="int" defaultValue="0">
             <constraints nullable="false"/>
             </column>
         </addColumn>
-        <addColumn tableName="user">
+        <addColumn tableName="users">
             <column name="verify_token" type="varchar(255)">
             <constraints nullable="false"/>
             </column>
         </addColumn>
-
     </changeSet>
+
+    <changeSet id="dropForeignKeyParentIdFromUsers" author="hgspeyan">
+        <dropForeignKeyConstraint baseTableName="users" constraintName="users_parent_fk"/>
+        <dropTable tableName="parent"/>
+    </changeSet>
+    <changeSet id="dropColumnParentIdFromUsers" author="hgspeyan">
+        <dropColumn tableName="users" columnName="parent_id" />
+    </changeSet>
+    <changeSet id="changeColumnParentIdNameInKid" author="hgspeyan">
+        <renameColumn tableName="kid" oldColumnName="parent_id" newColumnName="users_id" columnDataType="bigint"/>
+    </changeSet>
+    <changeSet id="createFkKidUser" author="hgspeyan">
+        <addForeignKeyConstraint baseTableName="kid" baseColumnNames="users_id" constraintName="kid_user_fk"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+    <changeSet id="dropKidUserFk" author="hgspeyan">
+        <dropForeignKeyConstraint baseTableName="kid" constraintName="kid_user_fk" />
+    </changeSet>
+    <changeSet id="dropColumnUsersIdFromKid" author="hgspeyan">
+        <dropColumn tableName="kid" columnName="users_id" />
+    </changeSet>
+    <changeSet id="dropFkKidIdFromBabysitter" author="hgspeyan">
+        <dropColumn tableName="babysitter" columnName="kid_id" />
+        <dropColumn tableName="kid" columnName="babysitter_id" />
+        <dropColumn tableName="event" columnName="kid_id"/>
+        <dropColumn tableName="kid" columnName="event_id"/>
+    </changeSet>
+<!--    <changeSet id="deleteColumnGroupInKid" author="hgspeyan">-->
+<!--        <dropColumn tableName="kid" columnName="group" />-->
+<!--    </changeSet>-->
+<!--    <changeSet id="createColumnKidGroup" author="hgspeyan">-->
+<!--        <addColumn tableName="kid">-->
+<!--            <column name="kid_group" type="Enum('JUNIOR','MIDDLE','SENIOR')" >-->
+<!--                <constraints nullable="true"/>-->
+<!--            </column>-->
+<!--        </addColumn>-->
+<!--    </changeSet>-->
+<changeSet id="createUserIdInKid" author="hgspeyan">
+    <addColumn tableName="kid">
+        <column name="user_id" type="bigint">
+            <constraints nullable="true"/>
+        </column>
+    </addColumn>
+</changeSet>
+    <changeSet id="changeDataTypeForDurationInEvent" author="hgspeyan">
+        <modifyDataType tableName="event" columnName="duration" newDataType="longblob" />
+    </changeSet>
+    <changeSet id="createUserIdInBabySitter" author="hgspeyan">
+        <addColumn tableName="babysitter">
+            <column name="users_id" type="bigint" >
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="renameColumnUsersId" author="hgspeyan">
+        <renameColumn tableName="babysitter" oldColumnName="users_id" newColumnName="user_id" columnDataType="bigint"/>
+    </changeSet>
+
+
 
 </databaseChangeLog>

@@ -1,16 +1,16 @@
 package am.friendsWebGroup.kidoskindergarten.api.controller;
 
 import am.friendsWebGroup.kidoskindergarten.api.UserApi;
-import am.friendsWebGroup.kidoskindergarten.dto.AuthRequestDto;
-import am.friendsWebGroup.kidoskindergarten.dto.AuthResponseDto;
-import am.friendsWebGroup.kidoskindergarten.dto.CreateUserDto;
+import am.friendsWebGroup.kidoskindergarten.dto.authDto.AuthRequestDto;
+import am.friendsWebGroup.kidoskindergarten.dto.authDto.AuthResponseDto;
+import am.friendsWebGroup.kidoskindergarten.dto.userDto.CreateUserDto;
+import am.friendsWebGroup.kidoskindergarten.dto.userDto.ResponseUserDto;
 import am.friendsWebGroup.kidoskindergarten.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
@@ -23,15 +23,19 @@ public class UserController implements UserApi {
 
     @Override
     @PostMapping
-    public ResponseEntity<?> registerUser(@RequestBody CreateUserDto createUserDto) {
+    public ResponseEntity<ResponseUserDto> registerUser(@Valid @RequestBody CreateUserDto createUserDto) {
         return ResponseEntity.status(CREATED).body(userService.saveUser(createUserDto));
     }
 
     @Override
     @PostMapping("/login")
-    public ResponseEntity<AuthResponseDto> login(@RequestBody AuthRequestDto authRequestDto) {
+    public ResponseEntity<AuthResponseDto> login(@Valid @RequestBody AuthRequestDto authRequestDto) {
         return ResponseEntity.ok(userService.login(authRequestDto));
     }
 
-
+    @Override
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseUserDto> findUserById(@PathVariable ("id") int id) {
+        return ResponseEntity.ok(userService.findUserById(id));
+    }
 }

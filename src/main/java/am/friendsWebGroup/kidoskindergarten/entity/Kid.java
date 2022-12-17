@@ -23,13 +23,14 @@ public class Kid {
     private String name;
     private String surname;
     @Enumerated(value = EnumType.STRING)
-    private Group group;
+    private KidGroup kidGroup;
     @Enumerated(value = EnumType.STRING)
     private Gender gender;
-    @ManyToOne
-    private Parent parent;
+    private String pic_url;
     @ManyToMany
     private List<Event> events;
+    @ManyToOne
+    private User user;
     @ManyToMany
     private List<Babysitter> babysitters;
 }

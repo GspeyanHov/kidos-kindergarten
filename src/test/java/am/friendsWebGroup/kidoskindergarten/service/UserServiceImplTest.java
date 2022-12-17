@@ -1,8 +1,8 @@
 package am.friendsWebGroup.kidoskindergarten.service;
 
 import am.friendsWebGroup.kidoskindergarten.MockData;
-import am.friendsWebGroup.kidoskindergarten.dto.AuthRequestDto;
-import am.friendsWebGroup.kidoskindergarten.dto.AuthResponseDto;
+import am.friendsWebGroup.kidoskindergarten.dto.authDto.AuthRequestDto;
+import am.friendsWebGroup.kidoskindergarten.dto.authDto.AuthResponseDto;
 import am.friendsWebGroup.kidoskindergarten.entity.User;
 import am.friendsWebGroup.kidoskindergarten.exception.AuthenticationException;
 import am.friendsWebGroup.kidoskindergarten.mapper.UserMapper;
@@ -30,11 +30,7 @@ class UserServiceImplTest {
     @Mock
     private UserRepository userRepository;
     @Mock
-    private UserMapper userMapper;
-    @Mock
     private PasswordEncoder passwordEncoder;
-    @Mock
-    private MailService mailService;
     @Mock
     private JwtTokenUtil jwtTokenUtil;
 
